@@ -1,6 +1,7 @@
 import DropdownMenu from "../DropdownMenu.js";
 import { Ethernet } from "./ethernet/index.js";
 import { Wifi } from "./wifi/index.js";
+import { Vpn } from "./vpn/index.js";
 
 export default () => {
   return DropdownMenu({
@@ -12,7 +13,7 @@ export default () => {
         vertical: true,
         hexpand: true,
         class_name: "menu-items-container network",
-        children: [Ethernet(), Wifi()],
+        children: [Ethernet(), Vpn()],
       }),
     }),
   });
