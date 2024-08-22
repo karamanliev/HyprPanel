@@ -1,5 +1,5 @@
 import { OSDOrientation } from "lib/types/options";
-import brightness from "services/Brightness"
+// import brightness from "services/Brightness"
 import options from "options"
 const audio = await Service.import("audio")
 
@@ -15,14 +15,14 @@ export const OSDLabel = (ort: OSDOrientation) => {
             hpack: "center",
             vpack: "center",
             setup: self => {
-                self.hook(brightness, () => {
-                    self.class_names = self.class_names.filter(c => c !== "overflow");
-                    self.label = `${Math.round(brightness.screen * 100)}`;
-                }, "notify::screen")
-                self.hook(brightness, () => {
-                    self.class_names = self.class_names.filter(c => c !== "overflow");
-                    self.label = `${Math.round(brightness.kbd * 100)}`;
-                }, "notify::kbd")
+                // self.hook(brightness, () => {
+                //     self.class_names = self.class_names.filter(c => c !== "overflow");
+                //     self.label = `${Math.round(brightness.screen * 100)}`;
+                // }, "notify::screen")
+                // self.hook(brightness, () => {
+                //     self.class_names = self.class_names.filter(c => c !== "overflow");
+                //     self.label = `${Math.round(brightness.kbd * 100)}`;
+                // }, "notify::kbd")
                 self.hook(audio.microphone, () => {
                     self.toggleClassName("overflow", audio.microphone.volume > 1)
                     self.label = `${Math.round(audio.microphone.volume * 100)}`;

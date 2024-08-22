@@ -1,5 +1,5 @@
 import options from "options";
-import brightness from "services/Brightness"
+// import brightness from "services/Brightness"
 import { OSDLabel } from "./label/index";
 import { OSDBar } from "./bar/index";
 import { OSDIcon } from "./icon/index";
@@ -45,12 +45,12 @@ const renderOSD = () => {
         transition: "crossfade",
         reveal_child: false,
         setup: self => {
-            self.hook(brightness, () => {
-                handleReveal(self, "reveal_child");
-            }, "notify::screen")
-            self.hook(brightness, () => {
-                handleReveal(self, "reveal_child");
-            }, "notify::kbd")
+            // self.hook(brightness, () => {
+            //     handleReveal(self, "reveal_child");
+            // }, "notify::screen")
+            // self.hook(brightness, () => {
+            //     handleReveal(self, "reveal_child");
+            // }, "notify::kbd")
             self.hook(audio.microphone, () => {
                 handleReveal(self, "reveal_child");
             }, "notify::volume")
@@ -113,12 +113,12 @@ export default () => Widget.Window({
         self.hook(enable, () => {
             handleReveal(self, "visible");
         })
-        self.hook(brightness, () => {
-            handleReveal(self, "visible");
-        }, "notify::screen")
-        self.hook(brightness, () => {
-            handleReveal(self, "visible");
-        }, "notify::kbd")
+        // self.hook(brightness, () => {
+        //     handleReveal(self, "visible");
+        // }, "notify::screen")
+        // self.hook(brightness, () => {
+        //     handleReveal(self, "visible");
+        // }, "notify::kbd")
         self.hook(audio.microphone, () => {
             handleReveal(self, "visible");
         }, "notify::volume")

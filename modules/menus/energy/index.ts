@@ -1,6 +1,6 @@
 import DropdownMenu from "../DropdownMenu.js";
 import { EnergyProfiles } from "./profiles/index.js";
-import { Brightness } from "./brightness/index.js";
+// import { Brightness } from "./brightness/index.js";
 
 export default () => {
     return DropdownMenu({
@@ -16,7 +16,7 @@ export default () => {
                 hexpand: true,
                 class_name: "menu-items-container energy",
                 children: [
-                    Brightness(),
+                    // Brightness(),
                     EnergyProfiles(),
                 ],
             }),
