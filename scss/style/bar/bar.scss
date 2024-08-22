@@ -28,93 +28,31 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
 .bar_item_box_visible {
   background-color: transparentize($bar-buttons-background, $transparency-value);
   border-radius: $bar-buttons-radius;
-  padding: 0.2rem 0.9rem;
-  margin: $bar-buttons-y_margins $bar-buttons-spacing;
+  padding: 0.15rem 0.75rem;
+  margin: 0.25em $bar-buttons-spacing 0.3em $bar-buttons-spacing;
   opacity: $bar-buttons-opacity/100;
 
   &:hover {
-    background: transparentize($bar-buttons-hover, $transparency-value-hover);
+    background: rgba(255, 255, 255, 0.1);
   }
 
-  &.battery {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-battery-background), $transparency-value);
 
+  &.systray {
     &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-battery-hover), $transparency-value-hover);
-    }
-  }
-
-  &.bluetooth {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-bluetooth-background), $transparency-value);
-
-    &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-bluetooth-hover), $transparency-value-hover);
-    }
-  }
-
-  &.clock {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-clock-background), $transparency-value);
-
-    &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-clock-hover), $transparency-value-hover);
-    }
-  }
-
-  &.media {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-media-background), $transparency-value);
-
-    &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-media-hover), $transparency-value-hover);
+      background: transparent;
     }
   }
 
   &.dashboard {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-background), $transparency-value);
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
 
     &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-dashboard-hover), $transparency-value-hover);
+      background: rgba(255, 255, 255, 0.3);
     }
   }
 
-  &.network {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-network-background), $transparency-value);
-
-    &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-network-hover), $transparency-value-hover);
-    }
-  }
-
-  &.notifications {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-notifications-background), $transparency-value);
-
-    &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-notifications-hover), $transparency-value-hover);
-    }
-  }
-
-  &.systray {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-systray-background), $transparency-value);
-
-    &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-systray-hover), $transparency-value-hover);
-    }
-  }
-
-  &.volume {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-volume-background), $transparency-value);
-
-    &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-volume-hover), $transparency-value-hover);
-    }
-  }
-
-  &.windowtitle {
-    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-windowtitle-background), $transparency-value);
-
-    &:hover {
-      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-windowtitle-hover), $transparency-value-hover);
-    }
-  }
 
   &.workspaces {
     background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-workspaces-background), $transparency-value);
