@@ -10,7 +10,7 @@ const SysTray = () => {
     const items = Utils.merge(
         [systemtray.bind("items"), ignore.bind("value")],
         (items, ignored) => {
-            const filteredTray = items.filter(({ id }) => !ignored.includes(id));
+            const filteredTray = items.filter(({ id }) => !ignored.includes(id) && id !== null);
 
             isVis.value = filteredTray.length > 0;
 

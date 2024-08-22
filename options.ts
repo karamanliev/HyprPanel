@@ -722,6 +722,7 @@ const options = mkOptions(OPTIONS, {
             ignore: opt([
                 "KDE Connect Indicator",
                 "spotify-client",
+                "gnome-next-meeting-applet"
             ]),
         },
         clock: {
