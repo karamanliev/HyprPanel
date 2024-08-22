@@ -6,6 +6,8 @@ import { Notifications } from "./notifications/index.js";
 import { Volume } from "./volume/index.js";
 import { Network } from "./network/index.js";
 import { Bluetooth } from "./bluetooth/index.js";
+import { Language } from "./language/index.js";
+import { Meetings } from "./meetings/index.js";
 import { BatteryLabel } from "./battery/index.js";
 import { Clock } from "./clock/index.js";
 import { SysTray } from "./systray/index.js";
@@ -28,6 +30,8 @@ type Section = "battery"
     | "volume"
     | "network"
     | "bluetooth"
+    | "language"
+    | "meetings"
     | "clock"
     | "systray";
 
@@ -58,6 +62,8 @@ const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
             "network",
             "bluetooth",
             "battery",
+            "language",
+            "meetings",
             "systray",
             "clock",
             "notifications"
@@ -82,6 +88,8 @@ const widget = {
     volume: () => WidgetContainer(Volume()),
     network: () => WidgetContainer(Network()),
     bluetooth: () => WidgetContainer(Bluetooth()),
+    language: () => WidgetContainer(Language()),
+    meetings: () => WidgetContainer(Meetings()),
     clock: () => WidgetContainer(Clock()),
     systray: () => WidgetContainer(SysTray()),
 };
@@ -128,35 +136,35 @@ function getGdkMonitors(): GdkMonitors {
  * NOTE: Some more funky stuff being done by GDK.
  * We render windows/bar based on the monitor ID. So if you have 3 monitors, then your
  * monitor IDs will be [0, 1, 2]. Hyprland will NEVER change what ID belongs to what monitor.
- *  
+ *
  * So if hyprland determines id 0 = DP-1, even after you unplug, shut off or restart your monitor,
  * the id 0 will ALWAYS be DP-1.
- *  
+ *
  * However, GDK (the righteous genius that it is) will change the order of ID anytime your monitor
  * setup is changed. So if you unplug your monitor and plug it back it, it now becomes the last id.
  * So if DP-1 was id 0 and you unplugged it, it will reconfigure to id 2. This sucks because now
  * there's a mismtach between what GDK determines the monitor is at id 2 and what Hyprland determines
  * is at id 2.
- *  
+ *
  * So for that reason, we need to redirect the input `monitor` that the Bar module takes in, to the
  * proper Hyprland monitor. So when monitor id 0 comes in, we need to find what the id of that monitor
  * is being determined as by Hyprland so the bars show up on the right monitors.
- *  
+ *
  * Since GTK3 doesn't contain connection names and only monitor models, we have to make the best guess
  * in the case that there are multiple models in the same resolution with the same scale. We find the
  * 'right' monitor by checking if the model matches along with the resolution and scale. If monitor at
  * ID 0 for GDK is being reported as 'MSI MAG271CQR' we find the same model in the Hyprland monitor list
  * and check if the resolution and scaling is the same... if it is then we determine it's a match.
- *  
+ *
  * The edge-case that we just can't handle is if you have the same monitors in the same resolution at the same
  * scale. So if you've got 2 'MSI MAG271CQR' monitors at 2560x1440 at scale 1, then we just match the first
- * monitor in the list as the first match and then the second 'MSI MAG271CQR' as a match in the 2nd iteration. 
- * You may have the bar showing up on the wrong one in this case because we don't know what the connector id 
+ * monitor in the list as the first match and then the second 'MSI MAG271CQR' as a match in the 2nd iteration.
+ * You may have the bar showing up on the wrong one in this case because we don't know what the connector id
  * is of either of these monitors (DP-1, DP-2) which are unique values - as these are only in GTK4.
- *  
+ *
  * Keep in mind though, this is ONLY an issue if you change your monitor setup by plugging in a new one, restarting
  * an existing one or shutting it off.
- *  
+ *
  * If your monitors aren't changed in the current session you're in then none of this safeguarding is relevant.
  *
  * Fun stuff really... :facepalm:
