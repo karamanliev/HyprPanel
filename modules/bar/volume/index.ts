@@ -54,6 +54,9 @@ const Volume = () => {
             on_primary_click: (clicked: any, event: Gdk.Event) => {
                 openMenu(clicked, event, "audiomenu");
             },
+            on_scroll_up: () => audio.speaker.volume += 0.05,
+            on_scroll_down: () => audio.speaker.volume -= 0.05,
+            on_secondary_click: () => audio.speaker.is_muted = !audio.speaker.is_muted
         },
     };
 };
