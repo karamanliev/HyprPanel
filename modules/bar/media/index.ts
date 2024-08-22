@@ -21,6 +21,7 @@ const Media = () => {
             ["Discord", " "],
             ["Plex", "󰚺 "],
             ["Spotify", "󰓇 "],
+            ["Tauon", " "],
             ["(.*)", "󰝚 "],
         ];
 
@@ -33,7 +34,7 @@ const Media = () => {
 
     const songIcon = Variable("");
 
-    const mediaLabel = Utils.watch("Media", [mpris, show_artist, truncation, truncation_size, show_label], () => {
+    const mediaLabel = Utils.watch("", [mpris, show_artist, truncation, truncation_size, show_label], () => {
         if (activePlayer.value && show_label.value) {
             const { track_title, identity, track_artists } = activePlayer.value;
             songIcon.value = getIconForPlayer(identity);
@@ -51,7 +52,8 @@ const Media = () => {
                     : `${truncatedLabel.substring(0, truncatedLabel.length - 3)}...`;
         } else {
             songIcon.value = getIconForPlayer(activePlayer.value?.identity || "");
-            return `Media`;
+            // return `Media`;
+            return ""
         }
     });
 
@@ -67,19 +69,22 @@ const Media = () => {
                             label: songIcon.bind("value").as(v => v || "󰝚"),
                         }),
                         Widget.Label({
-                            class_name: "bar-button-label media",
+                            class_name: activePlayer.bind("value").as(v => v ? "bar-button-label media" : ""),
                             label: mediaLabel,
                         }),
                     ],
                 }),
             }),
         }),
-        isVisible: false,
+        isVisible: true,
         boxClass: "media",
         name: "media",
         props: {
-            on_scroll_up: () => activePlayer.value?.next(),
-            on_scroll_down: () => activePlayer.value?.previous(),
+            // on_scroll_up: () => activePlayer.value?.next(),
+            // on_scroll_down: () => activePlayer.value?.previous(),
+            on_scroll_up: () => activePlayer.value.volume += 0.05,
+            on_scroll_down: () => activePlayer.value.volume -= 0.05,
+            on_secondary_click: () => activePlayer.value?.playPause(),
             on_primary_click: (clicked: any, event: Gdk.Event) => {
                 openMenu(clicked, event, "mediamenu");
             },
