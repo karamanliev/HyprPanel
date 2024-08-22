@@ -1,5 +1,5 @@
 import { OSDOrientation } from "lib/types/options";
-import brightness from "services/Brightness"
+// import brightness from "services/Brightness"
 const audio = await Service.import("audio")
 
 export const OSDIcon = (ort: OSDOrientation) => {
@@ -13,12 +13,12 @@ export const OSDIcon = (ort: OSDOrientation) => {
             hpack: "center",
             vpack: "center",
             setup: self => {
-                self.hook(brightness, () => {
-                    self.label = "󱍖";
-                }, "notify::screen")
-                self.hook(brightness, () => {
-                    self.label = "󰥻";
-                }, "notify::kbd")
+                // self.hook(brightness, () => {
+                //     self.label = "󱍖";
+                // }, "notify::screen")
+                // self.hook(brightness, () => {
+                //     self.label = "󰥻";
+                // }, "notify::kbd")
                 self.hook(audio.microphone, () => {
                     self.label = audio.microphone.is_muted ? "󰍭" : "󰍬";
                 }, "notify::volume")

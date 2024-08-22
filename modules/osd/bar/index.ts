@@ -1,5 +1,5 @@
 import { OSDOrientation } from "lib/types/options";
-import brightness from "services/Brightness"
+// import brightness from "services/Brightness"
 import options from "options"
 const audio = await Service.import("audio")
 
@@ -13,14 +13,14 @@ export const OSDBar = (ort: OSDOrientation) => {
                 inverted: ort === "vertical",
                 bar_mode: "continuous",
                 setup: self => {
-                    self.hook(brightness, () => {
-                        self.class_names = self.class_names.filter(c => c !== "overflow");
-                        self.value = brightness.screen;
-                    }, "notify::screen")
-                    self.hook(brightness, () => {
-                        self.class_names = self.class_names.filter(c => c !== "overflow");
-                        self.value = brightness.kbd;
-                    }, "notify::kbd")
+                    // self.hook(brightness, () => {
+                    //     self.class_names = self.class_names.filter(c => c !== "overflow");
+                    //     self.value = brightness.screen;
+                    // }, "notify::screen")
+                    // self.hook(brightness, () => {
+                    //     self.class_names = self.class_names.filter(c => c !== "overflow");
+                    //     self.value = brightness.kbd;
+                    // }, "notify::kbd")
                     self.hook(audio.microphone, () => {
                         self.toggleClassName("overflow", audio.microphone.volume > 1)
                         self.value = audio.microphone.volume <= 1 ? audio.microphone.volume : audio.microphone.volume - 1;
