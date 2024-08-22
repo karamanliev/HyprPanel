@@ -28,7 +28,7 @@ export const Notifications = () => {
                             label: notif.length.toString(),
                         });
 
-                        if (showTotal) {
+                        if (showTotal && notif.length > 0) {
                             return [notifIcon, notifLabel];
                         }
                         return [notifIcon];
