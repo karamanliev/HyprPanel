@@ -38,8 +38,10 @@ const Meetings = () => {
       });
     }
 
-    if (timeTo.includes("Tomorrow")) {
-      return ` ${event.title} | ${timeTo}`;
+    if (timeTo.includes("Tomorrow") | timeTo.includes("left")) {
+      return ` ${event.title}  ${timeTo}`;
+    } else if (timeTo.includes("at")) {
+      return "";
     } else {
       return ` ${event.title} in ${timeTo}`;
     }

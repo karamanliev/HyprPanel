@@ -49,8 +49,18 @@
     &.highlight {
       color: #dedede;
       border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
+      background-color: rgba(187, 154, 247, 0.6);
+      // background-color: rgba(255, 255, 255, 0.3);
+      padding: 0.15rem 0.5em;
+    }
+
+    &.unfocused-highlight {
+      color: #dedede;
+      border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
+      // background-color: rgba(187, 154, 247, 0.6);
       background-color: rgba(255, 255, 255, 0.3);
       padding: 0.15rem 0.5em;
+
     }
   }
 }
@@ -70,7 +80,7 @@
   }
 
   &:hover .can_highlight {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(187, 154, 247, 0.8);
     color: #dedede;
     border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
     padding: 0.15rem 0.5em;

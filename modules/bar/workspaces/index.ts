@@ -184,18 +184,25 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                             options.bar.workspaces.icons.available.bind("value"),
                                             options.bar.workspaces.icons.active.bind("value"),
                                             options.bar.workspaces.icons.occupied.bind("value"),
-                                            hyprland.active.workspace.bind("id")
+                                            hyprland.active.workspace.bind("id"),
+                                            hyprland.bind('monitors'),
                                         ],
                                         (show_icons, show_numbered, numbered_active_indicator) => {
                                             if (show_icons) {
                                                 return `workspace-icon txt-icon bar`;
                                             }
                                             if (show_numbered) {
+                                                const unfocusedMonitor = hyprland.monitors.find(m => !m.focused)
+                                                const unfocusedActiveWsId = unfocusedMonitor?.activeWorkspace.id
+
                                                 const numActiveInd = hyprland.active.workspace.id === i
                                                     ? numbered_active_indicator
                                                     : "";
 
-                                                return `workspace-number can_${numbered_active_indicator} ${numActiveInd}`;
+                                                const numUnfocusedInd = unfocusedActiveWsId === i ? "unfocused-highlight" : ""
+
+                                                return `workspace-number can_${numbered_active_indicator} ${numActiveInd} ${numUnfocusedInd}`;
+
                                             }
                                             return "default";
                                         },
