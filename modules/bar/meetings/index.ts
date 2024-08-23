@@ -1,6 +1,9 @@
 const systemtray = await Service.import("systemtray");
 
 const Meetings = () => {
+  let notificationSent = false;
+  let previousEventId: string | null = null;
+
   const handlePrimaryClick = (event) => {
     const items = systemtray.items;
 
@@ -19,29 +22,60 @@ const Meetings = () => {
     return event;
   }
 
-  async function getEventLabel() {
-    const event = await getNextEvent();
-    const timeTo = convertTimeFormat(event.timeto);
+  function generateEventId(event) {
+    return `${event.title}-${new Date().getTime()}`;
+  }
 
-    if (!timeTo.includes("h") && timeTo.replace("m", "") == "10") {
+  function sendNotification(title, timeTo, url) {
+    if (
+      !notificationSent &&
+      !timeTo.includes("h") &&
+      timeTo.replace("m", "") === "10"
+    ) {
       Utils.notify({
-        summary: event.title,
+        summary: title,
         body: "Starting in 10 minutes. Prepare!",
         iconName: "x-office-calendar-symbolic",
-        actions: event.url && {
+        actions: url && {
           "Open Meeting URL": () => {
-            Utils.execAsync(
-              `brave --profile-directory='Profile 7' "${event.url}"`,
-            );
+            Utils.execAsync(`brave --profile-directory='Profile 7' "${url}"`);
           },
         },
       });
     }
 
+    notificationSent = true;
+  }
+
+  async function checkEventAndNotify() {
+    const event = await getNextEvent();
+
+    const currentEventId = generateEventId(event); // Generate a unique ID for the event
+
+    if (currentEventId !== previousEventId) {
+      notificationSent = false; // Reset the flag if the event has changed
+      previousEventId = currentEventId; // Update the previous event ID
+    }
+
+    const timeTo = convertTimeFormat(event.timeto);
+
+    if (
+      !timeTo.includes("at") ||
+      !timeTo.includes("left") ||
+      !timeTo.includes("Tomorrow")
+    ) {
+      sendNotification(event.title, timeTo, event.url);
+    }
+  }
+
+  async function getEventLabel() {
+    const event = await getNextEvent();
+    const timeTo = convertTimeFormat(event.timeto);
+
     if (timeTo.includes("Tomorrow") | timeTo.includes("left")) {
       return ` ${event.title}  ${timeTo}`;
     } else if (timeTo.includes("at")) {
-      return "";
+      return " No upcoming meetings";
     } else {
       return ` ${event.title} in ${timeTo}`;
     }
@@ -64,6 +98,10 @@ const Meetings = () => {
       (60 - seconds) * 1000 - now.getMilliseconds();
     return millisecondsToNextMinute;
   };
+
+  setInterval(() => {
+    checkEventAndNotify();
+  }, 60000); // Check every minute
 
   return {
     component: Widget.Box({
@@ -97,7 +135,7 @@ const Meetings = () => {
     boxClass: "meetings",
     props: {
       on_primary_click: (_, event) => handlePrimaryClick(event),
-      on_secondary_click: () => Utils.exec("gnome-calendar"),
+      on_secondary_click: () => Utils.execAsync("gnome-calendar"),
       on_middle_click: () => {
         const url = Utils.exec(
           `gnome-next-meeting-applet dbus get_event_url`,
