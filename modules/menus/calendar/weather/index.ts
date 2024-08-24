@@ -9,7 +9,7 @@ import GLib from "gi://GLib?version=2.0"
 
 const { key, interval, location } = options.menus.clock.weather;
 
-const theWeather = Variable<Weather>(DEFAULT_WEATHER);
+export const theWeather = Variable<Weather>(DEFAULT_WEATHER);
 
 let weatherIntervalInstance: null | number = null;
 
