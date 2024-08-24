@@ -3,3 +3,7 @@
 .language {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
 }
+
+.style2.clock {
+  padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+}
