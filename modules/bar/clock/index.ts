@@ -15,7 +15,7 @@ const time = Utils.derive([date, format], (c, f) => c.format(f) || "");
 const Clock = () => {
   const weatherIcon = Widget.Icon({
     css: "margin-right: 5px;",
-    class_name: "bar-weather-icon",
+    class_name: "bar-button-icon weather txt-icon bar",
     icon: theWeather.bind("value").as((v) => {
       let iconQuery = v.current.condition.text
         .trim()
@@ -30,8 +30,8 @@ const Clock = () => {
   });
 
   const weatherTemp = Widget.Label({
-    css: "margin-right: 12px;",
-    class_name: "bar-weather",
+    css: "margin-right: 6px;",
+    class_name: "bar-button-label weather bar",
     label: Utils.merge([theWeather.bind("value")], (wthr) => {
       return `${Math.ceil(wthr.current.temp_c)}° C`;
     }),

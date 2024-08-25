@@ -2,7 +2,8 @@
 
   &.clock,
   &.meetings,
-  &.language {
+  &.language,
+  &.weather {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
     margin-left: $bar-buttons-clock-spacing;
   }
@@ -11,8 +12,9 @@
 .bar-button-icon {
 
   &.clock,
+  &.language,
   &.meetings,
-  &.language {
+  &.weather {
     font-size: 1.2em;
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon);
   }
@@ -23,7 +25,8 @@
 
     &.clock,
     &.meetings,
-    &.language {
+    &.language,
+    &.weather {
       border-top-left-radius: $bar-buttons-radius;
       border-bottom-left-radius: $bar-buttons-radius;
       background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-clock-icon_background);
@@ -37,7 +40,8 @@
 
     &.clock,
     &.meetings,
-    &.language {
+    &.language,
+    &.weather {
       padding: $bar-buttons-padding_y 0em;
       padding-right: $bar-buttons-padding_x;
       padding-left: $bar-buttons-clock-spacing;
