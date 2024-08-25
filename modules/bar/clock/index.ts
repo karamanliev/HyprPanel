@@ -14,7 +14,6 @@ const time = Utils.derive([date, format], (c, f) => c.format(f) || "");
 
 const Clock = () => {
   const weatherIcon = Widget.Icon({
-    css: "margin-right: 5px;",
     class_name: "bar-button-icon weather txt-icon bar",
     icon: theWeather.bind("value").as((v) => {
       let iconQuery = v.current.condition.text
