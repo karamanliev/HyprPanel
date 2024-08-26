@@ -82,12 +82,12 @@ const Clock = () => {
             children.push(weatherIcon, weatherTemp);
           }
 
-          if (shTm) {
-            children.push(clockTime);
-          }
-
           if (shIcn) {
             children.push(clockIcon);
+          }
+
+          if (shTm) {
+            children.push(clockTime);
           }
 
           return children;

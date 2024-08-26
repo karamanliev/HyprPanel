@@ -8,10 +8,12 @@ const { show_artist, truncation, truncation_size, show_label } = options.bar.med
 
 const Media = () => {
     const activePlayer = Variable(mpris.players[0]);
+    const isVis = Variable(mpris.players.length > 0);
 
     mpris.connect("changed", () => {
         const curPlayer = getCurrentPlayer(activePlayer.value);
         activePlayer.value = curPlayer;
+        isVis.value = mpris.players.length > 0;
     });
 
     const getIconForPlayer = (playerName: string): string => {
@@ -84,6 +86,7 @@ const Media = () => {
             }),
         }),
         isVisible: true,
+        isVis,
         boxClass: "media",
         name: "media",
         props: {

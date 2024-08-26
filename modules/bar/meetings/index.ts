@@ -108,8 +108,8 @@ const Meetings = () => {
       class_name: "meetings",
       children: [
         Widget.Label({
-          label: "󰸗 ",
-          class_name: "bar-button-icon txt-icon bar",
+          label: "󰨲",
+          class_name: "bar-button-icon txt-icon bar meetings",
         }),
 
         Widget.Label({
@@ -127,7 +127,7 @@ const Meetings = () => {
 
               setLabelAndStartInterval();
             }),
-          class_name: "bar-button-label meetings",
+          class_name: "bar-button-label bar meetings",
         }),
       ],
     }),
