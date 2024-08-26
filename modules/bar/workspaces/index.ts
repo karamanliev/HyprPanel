@@ -169,7 +169,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                             return Widget.Button({
                                 class_name: "workspace-button",
                                 on_primary_click: () => {
-                                    hyprland.messageAsync(`dispatch workspace ${i}`)
+                                    hyprland.messageAsync(`dispatch focusworkspaceoncurrentmonitor ${i}`)
 
                                 },
                                 child: Widget.Label({
