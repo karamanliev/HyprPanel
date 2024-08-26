@@ -4,8 +4,10 @@ import { openMenu } from "../utils.js";
 import options from "options";
 import { theWeather } from "modules/menus/calendar/weather/index.js";
 import icons from "modules/icons/index.js";
-const { format, icon, showIcon, showTime } = options.bar.clock;
+import Gtk from "types/@girs/gtk-3.0/gtk-3.0.js";
+const { format, icon, showIcon, showTime, showWeather } = options.bar.clock;
 const { style } = options.theme.bar.buttons;
+const { unit } = options.menus.clock.weather;
 
 const date = Variable(GLib.DateTime.new_now_local(), {
   poll: [1000, () => GLib.DateTime.new_now_local()],
@@ -31,9 +33,16 @@ const Clock = () => {
   const weatherTemp = Widget.Label({
     css: "margin-right: 6px;",
     class_name: "bar-button-label weather bar",
-    label: Utils.merge([theWeather.bind("value")], (wthr) => {
-      return `${Math.ceil(wthr.current.temp_c)}° C`;
-    }),
+    label: Utils.merge(
+      [theWeather.bind("value"), unit.bind("value")],
+      (wthr, unt) => {
+        if (unt === "imperial") {
+          return `${Math.ceil(wthr.current.temp_f)}° F`;
+        } else {
+          return `${Math.ceil(wthr.current.temp_c)}° C`;
+        }
+      },
+    ),
   });
 
   const clockTime = Widget.Label({
@@ -61,15 +70,27 @@ const Clock = () => {
         },
       ),
       children: Utils.merge(
-        [showIcon.bind("value"), showTime.bind("value")],
-        (shIcn, shTm) => {
-          if (shIcn && !shTm) {
-            return [clockIcon];
-          } else if (shTm && !shIcn) {
-            return [clockTime];
+        [
+          showIcon.bind("value"),
+          showTime.bind("value"),
+          showWeather.bind("value"),
+        ],
+        (shIcn, shTm, shWtr) => {
+          const children: Array<Gtk.Widget> = [];
+
+          if (shWtr) {
+            children.push(weatherIcon, weatherTemp);
           }
 
-          return [weatherIcon, weatherTemp, clockIcon, clockTime];
+          if (shTm) {
+            children.push(clockTime);
+          }
+
+          if (shIcn) {
+            children.push(clockIcon);
+          }
+
+          return children;
         },
       ),
     }),

@@ -747,6 +747,7 @@ const options = mkOptions(OPTIONS, {
             icon: opt("󰸗"),
             showIcon: opt(true),
             showTime: opt(true),
+            showWeather: opt(true),
             format: opt("%a %b %d  %I:%M:%S %p"),
         },
         media: {
