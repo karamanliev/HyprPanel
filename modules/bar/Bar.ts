@@ -7,6 +7,7 @@ import { Volume } from "./volume/index.js";
 import { Network } from "./network/index.js";
 import { Bluetooth } from "./bluetooth/index.js";
 import { Language } from "./language/index.js";
+import { Submap } from "./submap/index.js";
 import { Meetings } from "./meetings/index.js";
 import { BatteryLabel } from "./battery/index.js";
 import { Clock } from "./clock/index.js";
@@ -35,6 +36,7 @@ type Section = "battery"
     | "network"
     | "bluetooth"
     | "language"
+    | "submap"
     | "meetings"
     | "clock"
     | "systray";
@@ -67,6 +69,7 @@ const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
             "bluetooth",
             "battery",
             "language",
+            "submap",
             "meetings",
             "systray",
             "clock",
@@ -93,6 +96,7 @@ const widget = {
     network: () => WidgetContainer(Network()),
     bluetooth: () => WidgetContainer(Bluetooth()),
     language: () => WidgetContainer(Language()),
+    submap: () => WidgetContainer(Submap()),
     meetings: () => WidgetContainer(Meetings()),
     clock: () => WidgetContainer(Clock()),
     systray: () => WidgetContainer(SysTray()),
