@@ -6,17 +6,28 @@
   margin-top: 0em;
   min-width: 27em;
   min-height: 6em;
-  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-clock-background-color);
+  // background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-clock-background-color);
+  background: #1A1B26E0;
   border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-clock-border-color);
   border-radius: $bar-menus-border-radius;
   margin-right: 0.5em;
-  opacity: $bar-menus-opacity/100;
+  // opacity: $bar-menus-opacity/100;
 }
 
 .calendar-menu-item-container {
   border-radius: $bar-menus-card_radius;
   margin-bottom: 1.35em;
-  background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-clock-card-color);
+  // background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-clock-card-color);
+  // background: #24283B00;
+  // background: #C0CAF509;
+}
+
+
+.calendar-menu-item-container.clock {
+  border-radius: $bar-menus-card_radius;
+  // background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-clock-card-color);
+  // background: #24283BC0;
+  background: #C0CAF509;
 }
 
 .calendar-content-items {
@@ -33,11 +44,13 @@
   color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-clock-calendar-days);
 
   &:selected {
-    box-shadow: inset 0 -0.5em 0 0 if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-clock-calendar-currentday),
-      inset -0.4em -0.3em 0 0 if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-clock-card-color),
-      inset 0.4em 0 0 0.01em if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-clock-card-color);
-    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-clock-calendar-currentday);
-    border-radius: 0em;
+    // box-shadow: inset 0 -0.5em 0 0 if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-clock-calendar-currentday),
+    //   inset -0.4em -0.3em 0 0 if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-clock-card-color),
+    //   inset 0.4em 0 0 0.01em if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-clock-card-color);
+    // background-color: #24283BD0;
+    // color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-clock-calendar-currentday);
+    color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-clock-weather-icon);
+    border-radius: 6px;
   }
 
   &.header {
