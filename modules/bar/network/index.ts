@@ -31,6 +31,7 @@ const Network = () => {
       children: [
         Widget.Icon({
           class_name: "bar-button-icon network",
+          css: "margin-top: 2px;",
           icon: Utils.merge(
             [
               network.bind("primary"),
