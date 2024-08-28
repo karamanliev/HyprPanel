@@ -4,6 +4,7 @@ import { Controls } from "./components/controls.js";
 import { Bar } from "./components/bar.js";
 import { MprisPlayer } from "types/service/mpris.js";
 import options from "options.js";
+import { bash } from "lib/utils.js";
 
 const { tint, color } = options.theme.bar.menus.menu.media.card;
 
@@ -76,7 +77,16 @@ const Media = () => {
                                 hexpand: true,
                                 vertical: true,
                                 children: [
-                                    MediaInfo(getPlayerInfo),
+                                    Widget.Button({
+                                        child: MediaInfo(getPlayerInfo),
+                                        on_primary_click: async () => {
+                                            const curPlayer = getPlayerInfo();
+                                            const escapedTitle = curPlayer["track_title"].replace(/"/g, '\\"').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
+
+                                            Utils.execAsync(`hyprctl dispatch "focuswindow title:${escapedTitle}"`);
+                                            App.closeWindow("mediamenu");
+                                        }
+                                    }),
                                     Controls(getPlayerInfo),
                                     Bar(getPlayerInfo),
                                 ],
