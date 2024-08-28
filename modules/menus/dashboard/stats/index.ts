@@ -5,7 +5,7 @@ import { dependencies } from "lib/utils";
 const { terminal } = options;
 const { enable_gpu } = options.menus.dashboard.stats;
 
-const Stats = () => {
+const Stats = (returnStats?: boolean): any => {
     const divide = ([total, free]) => free / total;
 
     const formatSizeInGB = (sizeInKB: number) =>
@@ -205,6 +205,10 @@ const Stats = () => {
             ],
         },
     );
+
+    if (returnStats) {
+        return { cpu, ram };
+    }
 
     return Widget.Box({
         class_name: "dashboard-card stats-container",
