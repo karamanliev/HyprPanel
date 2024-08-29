@@ -18,6 +18,8 @@ export const Body = (notif: Notification) => {
                 wrap: true,
                 class_name: "notification-card-body-label",
                 label: notif["body"],
+            }).on("realize", self => {
+                self.set_markup(notif["body"])
             }),
         ],
     });
