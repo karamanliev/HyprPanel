@@ -44,7 +44,12 @@
     margin-bottom: 0.65em;
 
     .profile-picture {
-      font-size: 7.5em;
+      min-width: $bar-menus-menu-dashboard-profile-size;
+      min-height: $bar-menus-menu-dashboard-profile-size;
+      border-radius: $bar-menus-menu-dashboard-profile-radius;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     .profile-name {
@@ -120,11 +125,11 @@
       }
     }
 
-    .card-button-left-section {
+    .card-button-section-container.visible {
       margin-right: 1.5em;
     }
 
-    .top-button {
+    .top-button.paired {
       margin-bottom: 1.5em;
     }
 
@@ -133,11 +138,11 @@
       margin-bottom: 0.65em;
 
       &.most-used {
-        margin-right: 0em;
+        margin-right: 0.65em;
       }
 
-      &.utilities {
-        margin-left: 0.65em;
+      &.utilities.paired {
+        margin-left: 0em;
       }
 
       button {
