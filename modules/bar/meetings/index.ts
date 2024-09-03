@@ -38,7 +38,7 @@ const Meetings = () => {
         iconName: "x-office-calendar-symbolic",
         actions: url && {
           "Open Meeting URL": () => {
-            Utils.execAsync(`brave --profile-directory='Profile 7' "${url}"`);
+            Utils.execAsync(`brave --profile-directory='Work' "${url}"`);
           },
         },
       });
@@ -142,7 +142,7 @@ const Meetings = () => {
         ).trim();
 
         url
-          ? Utils.execAsync(`brave --profile-directory='Profile 7' "${url}"`)
+          ? Utils.execAsync(`brave --profile-directory='Work' "${url}"`)
           : Utils.notify({
               summary: "No event URL",
               iconName: "x-office-calendar-symbolic",
