@@ -19,6 +19,10 @@
       color: $red;
     }
 
+    &.pause {
+      color: $yellow;
+    }
+
     &.replay {
       color: $green;
     }
@@ -43,6 +47,10 @@
   &.recording {
     &.record {
       color: $red;
+    }
+
+    &.pause {
+      color: $yellow;
     }
 
     &.replay {

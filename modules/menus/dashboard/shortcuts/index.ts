@@ -14,6 +14,8 @@ const Shortcuts = () => {
                     return "replay";
                 } else if (out.includes("record")) {
                     return "record";
+                } else if (out.includes("pause")) {
+                    return "pause";
                 }
 
                 return "disabled";
@@ -208,8 +210,17 @@ const Shortcuts = () => {
                     }
                 },
                 on_secondary_click: (_, event) => {
-                    if (shortcut.command === "record" && isRecording.value === "disabled") {
-                        replayDropdown.popup_at_pointer(event);
+                    if (shortcut.command === "record") {
+                        if (isRecording.value === "disabled") {
+                            replayDropdown.popup_at_pointer(event);
+                        }
+
+                        if (isRecording.value === "record" || isRecording.value === "pause") {
+                            App.closeWindow("dashboardmenu");
+                            return Utils.execAsync(
+                                `${App.configDir}/services/screen_record.sh pause`,
+                            ).catch((err) => console.error(err));
+                        }
                     }
                 },
                 child: Widget.Label({

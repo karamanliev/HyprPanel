@@ -155,13 +155,22 @@
         }
 
         &.screen-record {
-         &.record {
+          &.record {
             background: $red;
 
             &:hover {
               background: transparentize($red, 0.5);
             }
           }
+
+          &.pause {
+            background: $yellow;
+
+            &:hover {
+              background: transparentize($yellow, 0.5);
+            }
+          }
+
           &.replay {
             background: $green;
 

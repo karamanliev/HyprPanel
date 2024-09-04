@@ -2,7 +2,7 @@
 
 outputDir="$HOME/Videos/Recordings"
 replayDir="$HOME/Videos/Replays"
-is_record=$(pgrep -f "gpu-screen-recorder" | xargs ps -o args= | grep -i "recordings") # check with folder name
+modeFile="/tmp/gpu_recording_mode"
 
 checkRecording() {
     if pgrep -f "gpu-screen-recorder" >/dev/null; then
@@ -29,9 +29,36 @@ startRecording() {
         exit 1
     fi
 
+    echo "record $target" >"$modeFile"
     gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor" -o "$outputPath" &
 
     echo "Recording started. Output will be saved to $outputPath"
+}
+
+pauseRecording() {
+    if ! checkRecording; then
+        echo "No recording is in progress."
+        exit 1
+    fi
+
+    if grep -q record "$modeFile"; then
+        sed -i "s/record/pause/" "$modeFile"
+        # notify-send "Recording paused" "Your recording has been paused." \
+        #     -i video-x-generic \
+        #     -a "Screen Recorder" \
+        #     -t 5000 \
+        #     -u normal
+    else
+        sed -i "s/pause/record/" "$modeFile"
+        # notify-send "Recording resumed" "Your recording has been resumed." \
+        #     -i video-x-generic \
+        #     -a "Screen Recorder" \
+        #     -t 5000 \
+        #     -u normal
+    fi
+
+    pkill -SIGUSR2 -f gpu-screen-recorder
+
 }
 
 startReplaying() {
@@ -50,6 +77,7 @@ startReplaying() {
         exit 1
     fi
 
+    echo "replay $target" >"$modeFile"
     gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor|$(pactl get-default-source)" -c mkv -r 45 -o "$outputPath" &
 
     echo "Replay started. Output will be saved to $outputPath"
@@ -78,9 +106,11 @@ stopRecording() {
         exit 1
     fi
 
-    pkill -f gpu-screen-recorder
+    local mode=$(cat "$modeFile")
+    rm "$modeFile"
 
-    if [ -n "$is_record" ]; then
+    pkill -f gpu-screen-recorder
+    if [ "$mode" = "record" ]; then
         recentFile=$(ls -t "$outputDir"/recording_*.mkv | head -n 1)
         notify-send "Recording stopped" "Your recording has been saved." \
             -i video-x-generic \
@@ -102,6 +132,9 @@ case "$1" in
 start)
     startRecording "$@"
     ;;
+pause)
+    pauseRecording
+    ;;
 replay)
     startReplaying "$@"
     ;;
@@ -113,13 +146,7 @@ stop)
     ;;
 status)
     if checkRecording; then
-        display=$(pgrep -f "gpu-screen-recorder" | xargs ps -o args= | grep -oP "(?<=-w )\S+")
-
-        if [ -n "$is_record" ]; then
-            echo "$display record"
-        else
-            echo "$display replay"
-        fi
+        cat "$modeFile"
     else
         echo "disabled"
     fi
