@@ -154,11 +154,20 @@
           font-size: 1.5em;
         }
 
-        &.record.active {
-          background: $red;
+        &.screen-record {
+         &.record {
+            background: $red;
 
-          &:hover {
-            background: transparentize($red, 0.5);
+            &:hover {
+              background: transparentize($red, 0.5);
+            }
+          }
+          &.replay {
+            background: $green;
+
+            &:hover {
+              background: transparentize($green, 0.5);
+            }
           }
         }
 

@@ -5,15 +5,18 @@ import { Variable as VarType } from "types/variable";
 const { left, right } = options.menus.dashboard.shortcuts;
 
 const Shortcuts = () => {
-    const isRecording = Variable(false, {
+    const isRecording = Variable("disabled", {
         poll: [
             1000,
             `${App.configDir}/services/screen_record.sh status`,
             (out) => {
-                if (out === "recording") {
-                    return true;
+                if (out === "replay") {
+                    return "replay";
+                } else if (out === "record") {
+                    return "record";
                 }
-                return false;
+
+                return "disabled";
             },
         ],
     });
@@ -37,7 +40,7 @@ const Shortcuts = () => {
             self.hook(hyprland, () => {
                 const displays = hyprland.monitors.map((mon) => {
                     return Widget.MenuItem({
-                        label: `Display ${mon.name}`,
+                        label: `Start recording ${mon.name}`,
                         on_activate: () => {
                             App.closeWindow("dashboardmenu");
                             Utils.execAsync(
@@ -66,6 +69,80 @@ const Shortcuts = () => {
                     // ...apps
                 ]);
             });
+        },
+    });
+
+    const replayDropdown = Widget.Menu({
+        class_name: "dropdown recording",
+        hpack: "fill",
+        hexpand: true,
+        setup: (self) => {
+            self.hook(hyprland, () => {
+                const displays = hyprland.monitors.map((mon) => {
+                    return Widget.MenuItem({
+                        label: `Start replay for ${mon.name}`,
+                        on_activate: () => {
+                            App.closeWindow("dashboardmenu");
+                            Utils.execAsync(
+                                `${App.configDir}/services/screen_record.sh replay ${mon.name}`,
+                            ).catch((err) => console.error(err));
+                        },
+                    });
+                });
+
+                return (self.children = [
+                    ...displays,
+                ]);
+            });
+        },
+    });
+
+    const saveStopReplayDropdown = Widget.Menu({
+        class_name: "dropdown",
+        hpack: "fill",
+        hexpand: true,
+        children: [
+            Widget.MenuItem({
+                label: "Save replay",
+                on_activate: () => {
+                    App.closeWindow("dashboardmenu");
+                    Utils.execAsync(
+                        `${App.configDir}/services/screen_record.sh save`,
+                    ).catch((err) => console.error(err));
+                },
+            }),
+            Widget.MenuItem({
+                label: "Stop replay",
+                on_activate: () => {
+                    App.closeWindow("dashboardmenu");
+                    Utils.execAsync(
+                        `${App.configDir}/services/screen_record.sh stop`,
+                    ).catch((err) => console.error(err));
+                },
+            }),
+        ],
+    });
+
+    const screenshotDropdown = Widget.Menu({
+        class_name: "dropdown",
+        hpack: "fill",
+        hexpand: true,
+        setup: (self) => {
+            const options = ["window", "output", "area"].map((opt) => {
+                return Widget.MenuItem({
+                    label: `${opt.charAt(0).toUpperCase() + opt.slice(1)}`,
+                    on_activate: () => {
+                        App.closeWindow("dashboardmenu");
+                        Utils.execAsync(
+                            `${App.configDir}/services/snapshot.sh ${opt}`,
+                        ).catch((err) => console.error(err));
+                    },
+                });
+            });
+
+            return (self.children = [
+                ...options,
+            ]);
         },
     });
 
@@ -116,14 +193,23 @@ const Shortcuts = () => {
                         App.closeWindow("dashboardmenu");
                         App.toggleWindow("settings-dialog");
                     } else if (shortcut.command === "record") {
-                        if (isRecording.value === true) {
+                        if (isRecording.value === "record") {
                             App.closeWindow("dashboardmenu");
                             return Utils.execAsync(
                                 `${App.configDir}/services/screen_record.sh stop`,
                             ).catch((err) => console.error(err));
+                        } else if (isRecording.value === "replay") {
+                            saveStopReplayDropdown.popup_at_pointer(event);
                         } else {
                             recordingDropdown.popup_at_pointer(event);
                         }
+                    } else if (shortcut.command = "screenshot") {
+                        screenshotDropdown.popup_at_pointer(event);
+                    }
+                },
+                on_secondary_click: (_, event) => {
+                    if (shortcut.command === "record" && isRecording.value === "disabled") {
+                        replayDropdown.popup_at_pointer(event);
                     }
                 },
                 child: Widget.Label({
@@ -259,13 +345,18 @@ const Shortcuts = () => {
                                     hexpand: true,
                                     vexpand: true,
                                     children: [
-                                        createButtonIfCommandExists(right.shortcut3, "dashboard-button top-button paired", right.shortcut3.command.value),
+                                        createButtonIfCommandExists({
+                                            tooltip: "Screenshot",
+                                            command: "screenshot",
+                                            icon: "󰄀",
+                                            configurable: false
+                                        }, `dashboard-button top-button paired`, "screenshot"),
                                         createButtonIfCommandExists({
                                             tooltip: "Record Screen",
                                             command: "record",
                                             icon: "󰑊",
                                             configurable: false
-                                        }, `dashboard-button record ${isRecording.value ? "active" : ""}`, "record"),
+                                        }, `dashboard-button screen-record ${isRecording.value}`, "record"),
                                     ],
                                 }),
                             }),
