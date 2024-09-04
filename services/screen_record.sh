@@ -110,7 +110,8 @@ stopRecording() {
     rm "$modeFile"
 
     pkill -f gpu-screen-recorder
-    if [ "$mode" = "record" ]; then
+
+    if echo "$mode" | grep -q record; then
         recentFile=$(ls -t "$outputDir"/recording_*.mkv | head -n 1)
         notify-send "Recording stopped" "Your recording has been saved." \
             -i video-x-generic \
@@ -152,7 +153,7 @@ status)
     fi
     ;;
 *)
-    echo "Usage: $0 {start/replay [screen_name]|save|stop|status}"
+    echo "Usage: $0 {start/replay [screen_name]|pasue|save|stop|status}"
     exit 1
     ;;
 esac
