@@ -28,6 +28,16 @@
   &.submap {
     color: #bb9af7;
   }
+
+  &.recording {
+    &.record {
+      color: $red;
+    }
+
+    &.replay {
+      color: $green;
+    }
+  }
 }
 
 .style2 {
