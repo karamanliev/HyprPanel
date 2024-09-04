@@ -18,6 +18,7 @@
         "clock"
       ],
       "right": [
+        "recording",
         "submap",
         "stats",
         "volume",
@@ -26,11 +27,6 @@
       ]
     },
     "1": {
-      "left": [],
-      "middle": [],
-      "right": []
-    },
-    "2": {
       "left": [
         "dashboard",
         "workspaces",
@@ -40,6 +36,7 @@
         "clock"
       ],
       "right": [
+        "recording",
         "submap",
         "volume",
         "network",
@@ -72,18 +69,18 @@
   "bar.notifications.show_total": true,
   "notifications.position": "top right",
   "notifications.timeout": 5000,
-  "theme.osd.monitor": 1,
+  "theme.osd.monitor": 0,
   "theme.osd.enable": true,
   "theme.osd.orientation": "vertical",
   "theme.osd.location": "right",
-  "theme.osd.active_monitor": false,
+  "theme.osd.active_monitor": true,
   "theme.osd.muted_zero": false,
   "menus.clock.time.military": true,
   "menus.clock.weather.key": "0a3595539b3f4c85822213746242806",
   "menus.clock.weather.location": "Varna",
   "menus.clock.weather.unit": "metric",
   "menus.dashboard.powermenu.avatar.name": "Hristo",
-  "menus.dashboard.powermenu.avatar.image": "/home/ico/Pictures/me_snowboard.png",
+  "menus.dashboard.powermenu.avatar.image": "/home/ico/Pictures/me_snowboard.jpg",
   "menus.dashboard.stats.enable_gpu": false,
   "menus.dashboard.directories.left.directory1.command": "bash -c \"nautilus $HOME/Downloads/\"",
   "menus.dashboard.directories.left.directory2.command": "bash -c \"nautilus $HOME/Videos/\"",
@@ -102,8 +99,8 @@
   "theme.bar.margin_top": "0.5em",
   "theme.bar.buttons.background_opacity": 0,
   "theme.bar.buttons.background_hover_opacity": 40,
-  "notifications.monitor": 1,
-  "notifications.active_monitor": false,
+  "notifications.monitor": 0,
+  "notifications.active_monitor": true,
   "notifications.cache_actions": true,
   "bar.windowtitle.title_map": [
     [
@@ -141,5 +138,18 @@
   "theme.bar.buttons.padding_y": "0.2rem",
   "theme.bar.buttons.padding_x": "0.7rem",
   "theme.bar.margin_bottom": "0em",
-  "bar.workspaces.hideUnoccupied": false
+  "bar.workspaces.hideUnoccupied": false,
+  "theme.bar.menus.menu.notifications.height": "58em",
+  "notifications.displayedTotal": 10,
+  "theme.bar.menus.menu.notifications.pager.show": true,
+  "theme.bar.menus.menu.dashboard.profile.radius": "0.5em",
+  "menus.dashboard.powermenu.confirmation": true,
+  "bar.media.hide_if_stopped": false,
+  "bar.customModules.updates.pollingInterval": 1440000,
+  "bar.customModules.ram.label": true,
+  "bar.customModules.netstat.label": true,
+  "bar.customModules.kbLayout.labelType": "layout",
+  "bar.customModules.weather.unit": "metric",
+  "bar.media.hide_if_inactive": true,
+  "bar.media.show_active_only": true
 }
