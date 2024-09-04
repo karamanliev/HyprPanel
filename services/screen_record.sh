@@ -80,13 +80,16 @@ stopRecording() {
         exit 1
     fi
 
+    local mode=$(cat "$modeFile")
+    rm "$modeFile"
+
     pkill -f gpu-screen-recorder
-    if [ "$(cat "$modeFile")" = "record" ]; then
+    if [ "$mode" = "record" ]; then
         recentFile=$(ls -t "$outputDir"/recording_*.mkv | head -n 1)
         notify-send "Recording stopped" "Your recording has been saved." \
             -i video-x-generic \
             -a "Screen Recorder" \
-            -t 10000 \
+            -t 8000 \
             -u normal \
             --action="scriptAction:-xdg-open $outputDir=Directory" \
             --action="scriptAction:-xdg-open $recentFile=Play"
@@ -94,11 +97,9 @@ stopRecording() {
         notify-send "Replaying stopped" "Background waiting for to save a replay has stopped." \
             -i video-x-generic \
             -a "Screen Recorder" \
-            -t 10000 \
+            -t 8000 \
             -u normal
     fi
-
-    echo "" >"$modeFile"
 }
 
 case "$1" in
@@ -116,11 +117,7 @@ stop)
     ;;
 status)
     if checkRecording; then
-        if [ "$(cat "$modeFile")" = "record" ]; then
-            echo "record"
-        else
-            echo "replay"
-        fi
+        cat "$modeFile"
     else
         echo "disabled"
     fi
