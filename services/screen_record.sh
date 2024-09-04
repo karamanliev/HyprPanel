@@ -2,7 +2,7 @@
 
 outputDir="$HOME/Videos/Recordings"
 replayDir="$HOME/Videos/Replays"
-modeFile="/tmp/gpu_recording_mode"
+is_record=$(pgrep -f "gpu-screen-recorder" | xargs ps -o args= | grep -i "recordings") # check with folder name
 
 checkRecording() {
     if pgrep -f "gpu-screen-recorder" >/dev/null; then
@@ -29,7 +29,6 @@ startRecording() {
         exit 1
     fi
 
-    echo "record" >"$modeFile"
     gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor" -o "$outputPath" &
 
     echo "Recording started. Output will be saved to $outputPath"
@@ -51,7 +50,6 @@ startReplaying() {
         exit 1
     fi
 
-    echo "replay" >"$modeFile"
     gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor|$(pactl get-default-source)" -c mkv -r 45 -o "$outputPath" &
 
     echo "Replay started. Output will be saved to $outputPath"
@@ -80,11 +78,9 @@ stopRecording() {
         exit 1
     fi
 
-    local mode=$(cat "$modeFile")
-    rm "$modeFile"
-
     pkill -f gpu-screen-recorder
-    if [ "$mode" = "record" ]; then
+
+    if [ -n "$is_record" ]; then
         recentFile=$(ls -t "$outputDir"/recording_*.mkv | head -n 1)
         notify-send "Recording stopped" "Your recording has been saved." \
             -i video-x-generic \
@@ -94,7 +90,7 @@ stopRecording() {
             --action="scriptAction:-xdg-open $outputDir=Directory" \
             --action="scriptAction:-xdg-open $recentFile=Play"
     else
-        notify-send "Replaying stopped" "Background waiting for to save a replay has stopped." \
+        notify-send "Replaying stopped" "Background service for saving a replay buffer has stopped." \
             -i video-x-generic \
             -a "Screen Recorder" \
             -t 8000 \
@@ -117,7 +113,13 @@ stop)
     ;;
 status)
     if checkRecording; then
-        cat "$modeFile"
+        display=$(pgrep -f "gpu-screen-recorder" | xargs ps -o args= | grep -oP "(?<=-w )\S+")
+
+        if [ -n "$is_record" ]; then
+            echo "$display record"
+        else
+            echo "$display replay"
+        fi
     else
         echo "disabled"
     fi

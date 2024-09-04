@@ -10,9 +10,9 @@ const Shortcuts = () => {
             1000,
             `${App.configDir}/services/screen_record.sh status`,
             (out) => {
-                if (out === "replay") {
+                if (out.includes("replay")) {
                     return "replay";
-                } else if (out === "record") {
+                } else if (out.includes("record")) {
                     return "record";
                 }
 

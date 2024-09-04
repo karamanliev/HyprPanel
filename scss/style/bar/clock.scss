@@ -4,6 +4,7 @@
   &.meetings,
   &.language,
   &.weather,
+  &.recording,
   &.submap {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
     margin-left: $bar-buttons-clock-spacing;
@@ -11,6 +12,16 @@
 
   &.submap {
     color: #bb9af7;
+  }
+
+  &.recording {
+    &.record {
+      color: $red;
+    }
+
+    &.replay {
+      color: $green;
+    }
   }
 }
 

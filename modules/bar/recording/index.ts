@@ -17,31 +17,44 @@ const Recording = () => {
     ],
   });
 
-  const recordingIcon = Widget.Box({
-    child: Utils.merge([mode.bind("value")], () => {
-      return Widget.Label({
-        label: "󰑊",
-        class_name: `bar-button-icon recording txt-icon bar ${mode.value}`,
-      });
+  const recordingLabel = Widget.Box({
+    children: Utils.merge([mode.bind("value")], () => {
+      const recordMode = mode.value.split(" ")[1];
+
+      return [
+        Widget.Label({
+          label: "󰑊",
+          class_name: `bar-button-icon recording txt-icon bar ${recordMode}`,
+        }),
+
+        Widget.Label({
+          label: mode.value.toUpperCase(),
+          class_name: `bar-button-label recording ${recordMode}`,
+        }),
+      ];
     }),
   });
 
   return {
     component: Widget.Box({
       class_name: "recording",
-      children: [recordingIcon],
+      child: recordingLabel,
     }),
     isVisible: true,
     boxClass: "recording",
     isVis,
     props: {
       on_primary_click: async () => {
+        const recordMode = mode.value.split(" ")[1];
+
         Utils.execAsync(
-          `${App.configDir}/services/screen_record.sh ${mode.value === "record" ? "stop" : "save"}`,
+          `${App.configDir}/services/screen_record.sh ${recordMode === "record" ? "stop" : "save"}`,
         ).catch((err) => console.error(err));
       },
       on_secondary_click: async () => {
-        if (mode.value === "replay") {
+        const recordMode = mode.value.split(" ")[1];
+
+        if (recordMode === "replay") {
           Utils.execAsync(
             `${App.configDir}/services/screen_record.sh stop`,
           ).catch((err) => console.error(err));
