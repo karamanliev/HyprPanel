@@ -74,6 +74,7 @@ const Workspaces = (monitor = -1) => {
                             return Widget.Button({
                                 class_name: "workspace-button",
                                 on_primary_click: () => {
+                                    Utils.execAsync(['bash', '-c', '~/.config/hypr/scripts/hide_special_on_ws_change.sh'])
                                     hyprland.messageAsync(`dispatch focusworkspaceoncurrentmonitor ${i}`)
 
                                 },
