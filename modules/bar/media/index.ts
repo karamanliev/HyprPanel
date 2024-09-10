@@ -4,16 +4,20 @@ import { openMenu } from "../utils.js";
 import options from "options";
 import { getCurrentPlayer } from 'lib/shared/media.js';
 
-const { show_artist, truncation, truncation_size, show_label } = options.bar.media;
+const { show_artist, truncation, truncation_size, show_label, show_active_only } = options.bar.media;
 
 const Media = () => {
     const activePlayer = Variable(mpris.players[0]);
-    const isVis = Variable(mpris.players.length > 0);
+    const isVis = Variable(!show_active_only.value);
+
+    show_active_only.connect("changed", () => {
+        isVis.value = !show_active_only.value || mpris.players.length > 0;
+    });
 
     mpris.connect("changed", () => {
         const curPlayer = getCurrentPlayer(activePlayer.value);
         activePlayer.value = curPlayer;
-        isVis.value = mpris.players.length > 0;
+        isVis.value = !show_active_only.value || mpris.players.length > 0;
     });
 
     const getIconForPlayer = (playerName: string): string => {
@@ -54,8 +58,7 @@ const Media = () => {
                     : `${truncatedLabel.substring(0, truncatedLabel.length - 3)}...`;
         } else {
             songIcon.value = getIconForPlayer(activePlayer.value?.identity || "");
-            // return `Media`;
-            return ""
+            return `Media`;
         }
     });
 
@@ -68,6 +71,7 @@ const Media = () => {
                         default: "style1",
                         split: "style2",
                         wave: "style3",
+                        wave2: "style3",
                     };
                     return `media ${styleMap[style]}`;
                 }),
@@ -85,7 +89,6 @@ const Media = () => {
                 }),
             }),
         }),
-        isVisible: true,
         isVis,
         boxClass: "media",
         name: "media",

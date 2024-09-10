@@ -7,11 +7,11 @@
 
 .menu-items-container.media {
   * {
-    font-size: $font-size * $bar-menus-menu-media-scaling/100;
+    font-size: $font-size * $bar-menus-menu-media-scaling * 0.01;
   }
 
-  min-width: 23em * $bar-menus-menu-media-scaling/100;
-  min-height: 10em * $bar-menus-menu-media-scaling/100;
+  min-width: 23em * $bar-menus-menu-media-scaling * 0.01;
+  min-height: 10em * $bar-menus-menu-media-scaling * 0.01;
 
   .menu-section-container {
     margin: 1em 0em;

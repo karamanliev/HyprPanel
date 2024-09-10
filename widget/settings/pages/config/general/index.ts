@@ -25,6 +25,14 @@ export const BarGeneral = () => {
                     }
                 }),
                 Option({ opt: options.terminal, title: 'Terminal', subtitle: "Tools such as 'btop' will open in this terminal", type: 'string' }),
+                Option({
+                    opt: options.tear,
+                    title: 'Tearing Compatible',
+                    subtitle:
+                        "Makes HyprPanel compatible with Hyprland tearing.\n" +
+                        "Enabling this will change all overlays (Notifications, OSDs, Bar) to the \'top\' layer instead the \'overlay\' layer.",
+                    type: 'boolean'
+                }),
 
                 Header('Scaling'),
                 Option({ opt: options.theme.bar.scaling, title: 'Bar', type: 'number', min: 1, max: 100, increment: 5 }),
@@ -39,6 +47,7 @@ export const BarGeneral = () => {
                 Option({ opt: options.theme.bar.menus.menu.battery.scaling, title: 'Battery Menu', type: 'number', min: 1, max: 100, increment: 5 }),
                 Option({ opt: options.theme.bar.menus.menu.clock.scaling, title: 'Clock Menu', type: 'number', min: 1, max: 100, increment: 5 }),
                 Option({ opt: options.theme.bar.menus.menu.notifications.scaling, title: 'Notifications Menu', type: 'number', min: 1, max: 100, increment: 5 }),
+                Option({ opt: options.theme.bar.menus.menu.power.scaling, title: 'Power Menu', type: 'number', min: 1, max: 100, increment: 5 }),
             ]
         })
     })

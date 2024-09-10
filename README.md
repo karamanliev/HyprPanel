@@ -28,6 +28,7 @@ curl -fsSL https://bun.sh/install | bash && \
 Additional dependencies:
 ```sh
 pipewire
+libgtop
 bluez
 bluez-utils
 grimblast
@@ -48,11 +49,14 @@ Optional Dependencies:
 ## Used for Tracking GPU Usage in your Dashboard (NVidia only)
 python
 python-gpustat
+
+## Only if a pywal hook from wallpaper changes applied through settings is desired
+pywal
 ```
 
 Arch (pacman):
 ```bash
-sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
+sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
 ```
 
 Arch (AUR):

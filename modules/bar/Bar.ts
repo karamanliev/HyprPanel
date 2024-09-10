@@ -1,20 +1,31 @@
-import { Menu } from "./menu/index.js";
-import { Workspaces } from "./workspaces/index.js";
-import { ClientTitle } from "./window_title/index.js";
-import { Media } from "./media/index.js";
-import { Notifications } from "./notifications/index.js";
-import { Volume } from "./volume/index.js";
-import { Network } from "./network/index.js";
-import { Bluetooth } from "./bluetooth/index.js";
-import { Language } from "./language/index.js";
-import { Recording } from "./recording/index.js";
-import { Stats } from "./stats/index.js";
-import { Submap } from "./submap/index.js";
-import { Meetings } from "./meetings/index.js";
-import { BatteryLabel } from "./battery/index.js";
-import { Clock } from "./clock/index.js";
-import { SysTray } from "./systray/index.js";
 const hyprland = await Service.import("hyprland");
+
+import {
+    Menu,
+    Workspaces, ClientTitle, Media,
+    Notifications,
+    Volume,
+    Network,
+    Bluetooth,
+    BatteryLabel,
+    Clock,
+    SysTray,
+
+    // Custom Modules
+    Ram,
+    Cpu,
+    Storage,
+    Netstat,
+    KbInput,
+    Updates,
+    Weather,
+    Power,
+    Meetings,
+    Submap,
+    Stats,
+    Recording,
+    Language,
+} from "./Exports"
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
 import options from "options";
@@ -23,6 +34,7 @@ import Button from "types/widgets/button.js";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0.js";
 
 import './SideEffects';
+import { WindowLayer } from "lib/types/options.js";
 
 const { layouts } = options.bar;
 
@@ -43,6 +55,14 @@ type Section = "battery"
     | "submap"
     | "meetings"
     | "clock"
+    | "ram"
+    | "cpu"
+    | "storage"
+    | "netstat"
+    | "kbinput"
+    | "updates"
+    | "weather"
+    | "power"
     | "systray";
 
 type Layout = {
@@ -108,6 +128,14 @@ const widget = {
     meetings: () => WidgetContainer(Meetings()),
     clock: () => WidgetContainer(Clock()),
     systray: () => WidgetContainer(SysTray()),
+    ram: () => WidgetContainer(Ram()),
+    cpu: () => WidgetContainer(Cpu()),
+    storage: () => WidgetContainer(Storage()),
+    netstat: () => WidgetContainer(Netstat()),
+    kbinput: () => WidgetContainer(KbInput()),
+    updates: () => WidgetContainer(Updates()),
+    weather: () => WidgetContainer(Weather()),
+    power: () => WidgetContainer(Power()),
 };
 
 type GdkMonitors = {
@@ -127,7 +155,7 @@ function getGdkMonitors(): GdkMonitors {
     }
 
     const numGdkMonitors = display.get_n_monitors();
-    const gdkMonitors = {};
+    const gdkMonitors: GdkMonitors = {};
 
     for (let i = 0; i < numGdkMonitors; i++) {
         const curMonitor = display.get_monitor(i);
@@ -137,7 +165,7 @@ function getGdkMonitors(): GdkMonitors {
             continue;
         }
 
-        const model = curMonitor.get_model();
+        const model = curMonitor.get_model() || '';
         const geometry = curMonitor.get_geometry();
         const scaleFactor = curMonitor.get_scale_factor();
 
@@ -253,12 +281,25 @@ export const Bar = (() => {
             visible: true,
             anchor: ["top", "left", "right"],
             exclusivity: "exclusive",
-            layer: options.theme.bar.layer.bind("value"),
+            layer: Utils.merge(
+                [
+                    options.theme.bar.layer.bind("value"),
+                    options.tear.bind("value")
+                ],
+                (
+                    barLayer: WindowLayer,
+                    tear: boolean
+                ) => {
+                    if (tear && barLayer === "overlay") {
+                        return "top";
+                    }
+                    return barLayer;
+                }),
             child: Widget.Box({
                 class_name: 'bar-panel-container',
                 child: Widget.CenterBox({
                     class_name: 'bar-panel',
-                    css: 'padding: 1px 0px 0px 0px',
+                    css: 'padding: 1px',
                     startWidget: Widget.Box({
                         class_name: "box-left",
                         hexpand: true,

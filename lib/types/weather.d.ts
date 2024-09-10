@@ -1,3 +1,7 @@
+import { weatherIcons } from "modules/icons/weather";
+
+export type UnitType = "imperial" | "metric";
+
 export type Weather = {
     location: Location;
     current: Current;
@@ -105,3 +109,10 @@ export type Location = {
     localtime_epoch: number;
     localtime: string;
 }
+
+export type TemperatureIconColorMap = {
+    [key: number]: string;
+}
+
+export type WeatherIconTitle = keyof typeof weatherIcons;
+export type WeatherIcon = typeof weatherIcons[WeatherIconTitle];
