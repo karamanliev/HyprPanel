@@ -40,7 +40,8 @@
 
 
   .menu-items-section {
-    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
+    // background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
+    background: #24283B00;
     min-height: 20em * $bar-menus-menu-bluetooth-scaling * 0.01;
     font-size: 1em;
   }

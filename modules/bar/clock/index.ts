@@ -2,7 +2,7 @@ import Gdk from "gi://Gdk?version=3.0";
 import GLib from "gi://GLib";
 import { openMenu } from "../utils.js";
 import options from "options";
-import { theWeather } from "modules/menus/calendar/weather/index.js";
+import { globalWeatherVar } from "globals/weather.js";
 import icons from "modules/icons/index.js";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0.js";
 const { format, icon, showIcon, showTime, showWeather } = options.bar.clock;
@@ -18,7 +18,7 @@ const Clock = () => {
   const weatherIcon = Widget.Icon({
     class_name: "bar-button-icon weather txt-icon bar",
     css: "margin-right: -2px;",
-    icon: theWeather.bind("value").as((v) => {
+    icon: globalWeatherVar.bind("value").as((v) => {
       let iconQuery = v.current.condition.text
         .trim()
         .toLowerCase()
@@ -35,7 +35,7 @@ const Clock = () => {
     css: "margin-right: 6px;",
     class_name: "bar-button-label weather bar",
     label: Utils.merge(
-      [theWeather.bind("value"), unit.bind("value")],
+      [globalWeatherVar.bind("value"), unit.bind("value")],
       (wthr, unt) => {
         if (unt === "imperial") {
           return `${Math.ceil(wthr.current.temp_f)}° F`;
@@ -65,6 +65,7 @@ const Clock = () => {
             default: "style1",
             split: "style2",
             wave: "style3",
+            wave2: "style4",
           };
 
           return `bluetooth ${styleMap[btnStyle]} ${!shwLbl ? "no-label" : ""} ${!shwIcn ? "no-icon" : ""}`;

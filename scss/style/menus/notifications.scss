@@ -7,6 +7,7 @@
   min-width: 30.6em * $bar-menus-menu-notifications-scaling * 0.01;
   min-height: $bar-menus-menu-notifications-height * $bar-menus-menu-notifications-scaling * 0.01;
   // background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-notifications-background);
+  background: #1A1B26E0;
   border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
   border-radius: $bar-menus-border-radius;
   margin-right: 0.45em;
