@@ -78,14 +78,14 @@ export const goToNextWS = (currentMonitorWorkspaces: Variable<number[]>, activeW
             nextIndex = activeWses[0].id;
         }
 
-        hyprland.messageAsync(`dispatch workspace ${nextIndex}`)
+        hyprland.messageAsync(`dispatch exec ~/.config/hypr/scripts/next_prev_workspace.sh next`)
     } else if (currentMonitorWorkspaces.value === undefined) {
         let nextIndex = hyprland.active.workspace.id + 1;
         if (nextIndex > workspaces.value) {
             nextIndex = 0;
         }
 
-        hyprland.messageAsync(`dispatch workspace ${nextIndex}`)
+        hyprland.messageAsync(`dispatch exec ~/.config/hypr/scripts/next_prev_workspace.sh next`)
     } else {
         const curWorkspace = hyprland.active.workspace.id;
         const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
@@ -94,7 +94,7 @@ export const goToNextWS = (currentMonitorWorkspaces: Variable<number[]>, activeW
             nextIndex = 0;
         }
 
-        hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[nextIndex]}`)
+        hyprland.messageAsync(`dispatch exec ~/.config/hypr/scripts/next_prev_workspace.sh next`)
     }
 }
 
@@ -108,7 +108,7 @@ export const goToPrevWS = (currentMonitorWorkspaces: Variable<number[]>, activeW
             prevIndex = activeWses[activeWses.length - 1].id;
         }
 
-        hyprland.messageAsync(`dispatch workspace ${prevIndex}`)
+        hyprland.messageAsync(`dispatch exec ~/.config/hypr/scripts/next_prev_workspace.sh prev`)
     } else if (currentMonitorWorkspaces.value === undefined) {
         let prevIndex = hyprland.active.workspace.id - 1;
 
@@ -116,7 +116,7 @@ export const goToPrevWS = (currentMonitorWorkspaces: Variable<number[]>, activeW
             prevIndex = workspaces.value;
         }
 
-        hyprland.messageAsync(`dispatch workspace ${prevIndex}`)
+        hyprland.messageAsync(`dispatch exec ~/.config/hypr/scripts/next_prev_workspace.sh prev`)
     } else {
         const curWorkspace = hyprland.active.workspace.id;
         const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
@@ -125,7 +125,7 @@ export const goToPrevWS = (currentMonitorWorkspaces: Variable<number[]>, activeW
             prevIndex = currentMonitorWorkspaces.value.length - 1;
         }
 
-        hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[prevIndex]}`)
+        hyprland.messageAsync(`dispatch exec ~/.config/hypr/scripts/next_prev_workspace.sh prev`)
     }
 }
 
