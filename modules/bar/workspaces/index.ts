@@ -136,6 +136,14 @@ const Workspaces = (monitor = -1) => {
                                                     return available;
                                                 }
                                             }
+
+                                            if (index === 8) {
+                                                return 'G';
+                                            }
+                                            if (index === 9) {
+                                                return 'M';
+                                            }
+
                                             return workspaceMask
                                                 ? `${index + 1}`
                                                 : `${i}`;
