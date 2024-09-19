@@ -28,8 +28,8 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
 .bar_item_box_visible {
   background-color: transparentize($bar-buttons-background, $transparency-value);
   border-radius: $bar-buttons-radius;
-  padding: 0.15rem 0.75rem;
-  margin: 0.25em $bar-buttons-spacing 0.3em $bar-buttons-spacing;
+  padding: 0.1rem 0.75rem;
+  margin: 0.3em $bar-buttons-spacing 0.3em $bar-buttons-spacing;
   opacity: $bar-buttons-opacity/100;
 
   &.style3 {
