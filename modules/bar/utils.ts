@@ -18,7 +18,7 @@ export const closeAllMenus = () => {
     });
 };
 
-export const openMenu = (clicked: any, event: Gdk.Event, window: string) => {
+export const openMenu = (clicked: any, event: Gdk.Event, window: string, external?: boolean) => {
     /*
      * NOTE: We have to make some adjustments so the menu pops up relatively
      * to the center of the button clicked. We don't want the menu to spawn
@@ -45,5 +45,5 @@ export const openMenu = (clicked: any, event: Gdk.Event, window: string) => {
     globalMousePos.value = coords;
 
     closeAllMenus();
-    App.toggleWindow(window);
+    external ? Utils.execAsync(window) : App.toggleWindow(window);
 };
