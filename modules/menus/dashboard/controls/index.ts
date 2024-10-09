@@ -1,6 +1,5 @@
 const network = await Service.import("network");
 const bluetooth = await Service.import("bluetooth");
-const notifications = await Service.import("notifications");
 const audio = await Service.import("audio");
 
 const Controls = () => {
@@ -45,15 +44,10 @@ const Controls = () => {
             Widget.Button({
                 tooltip_text: "Toggle Notifications",
                 expand: true,
-                class_name: notifications
-                    .bind("dnd")
-                    .as(
-                        (dnd) => `dashboard-button notifications ${dnd ? "disabled" : ""}`,
-                    ),
-                on_primary_click: () => (notifications.dnd = !notifications.dnd),
+                class_name: "dashboard-button notifications",
                 child: Widget.Label({
                     class_name: "txt-icon",
-                    label: notifications.bind("dnd").as((dnd) => (dnd ? "󰂛" : "󰂚")),
+                    label: "󰂚"
                 }),
             }),
             Widget.Button({
