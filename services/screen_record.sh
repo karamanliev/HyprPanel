@@ -91,13 +91,13 @@ saveReplay() {
 
     pkill -SIGUSR1 -f gpu-screen-recorder
     recentFile=$(ls -t "$replayDir"/Replay_*.mkv | head -n 1)
-    notify-send "Replay saved" "Your last 45 seconds has been saved." \
+    notify-send.sh "Replay saved" "Your last 45 seconds has been saved." \
         -i video-x-generic \
         -a "Screen Recorder" \
         -t 10000 \
         -u normal \
-        --action="scriptAction:-xdg-open $replayDir=Directory" \
-        --action="scriptAction:-xdg-open $recentFile=Play"
+        --action="Directory:xdg-open $replayDir" \
+        --action="Play:xdg-open $recentFile"
 }
 
 stopRecording() {
@@ -113,15 +113,15 @@ stopRecording() {
 
     if echo "$mode" | grep -q record; then
         recentFile=$(ls -t "$outputDir"/recording_*.mkv | head -n 1)
-        notify-send "Recording stopped" "Your recording has been saved." \
+        notify-send.sh "Recording stopped" "Your recording has been saved." \
             -i video-x-generic \
             -a "Screen Recorder" \
             -t 8000 \
             -u normal \
-            --action="scriptAction:-xdg-open $outputDir=Directory" \
-            --action="scriptAction:-xdg-open $recentFile=Play"
+            --action="Directory:xdg-open $outputDir" \
+            --action="Play:xdg-open $recentFile"
     else
-        notify-send "Replaying stopped" "Background service for saving a replay buffer has stopped." \
+        notify-send.sh "Replaying stopped" "Background service for saving a replay buffer has stopped." \
             -i video-x-generic \
             -a "Screen Recorder" \
             -t 8000 \
