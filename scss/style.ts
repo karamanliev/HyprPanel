@@ -1,7 +1,7 @@
 import options from "options";
 import { bash, dependencies } from "lib/utils";
 import { MatugenColors, RecursiveOptionsObject } from "lib/types/options";
-import { initializeTrackers } from "./options_trackers";
+// import { initializeTrackers } from "./options_trackers";
 import { generateMatugenColors, replaceHexValues } from "../services/matugen/index";
 import { isHexColor, isOpt, isRecursiveOptionsObject } from "globals/variables";
 import { Opt } from "lib/option";
@@ -86,7 +86,7 @@ async function resetCss() {
     }
 }
 
-initializeTrackers(resetCss);
+// initializeTrackers(resetCss);
 
 Utils.monitorFile(`${App.configDir}/scss/style`, resetCss);
 options.handler(deps, resetCss);

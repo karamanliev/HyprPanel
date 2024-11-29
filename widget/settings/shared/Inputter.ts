@@ -3,7 +3,7 @@ import Gdk from "gi://Gdk"
 import icons from "lib/icons"
 import { RowProps } from "lib/types/options"
 import { Variable } from "types/variable";
-import Wallpaper from "services/Wallpaper";
+// import Wallpaper from "services/Wallpaper";
 import { dependencies as checkDependencies } from "lib/utils";
 import options from "options";
 import { importFiles, saveFileDialog } from "./FileChooser";
@@ -179,14 +179,14 @@ export const Inputter = <T>({
                     ]
                 })
 
-                case "wallpaper": return self.child = Widget.FileChooserButton({
-                    on_file_set: ({ uri }) => {
-                        opt.value = uri!.replace("file://", "") as T;
-                        if (options.wallpaper.enable.value) {
-                            Wallpaper.set(uri!.replace("file://", ""));
-                        }
-                    },
-                })
+                // case "wallpaper": return self.child = Widget.FileChooserButton({
+                //     on_file_set: ({ uri }) => {
+                //         opt.value = uri!.replace("file://", "") as T;
+                //         if (options.wallpaper.enable.value) {
+                //             Wallpaper.set(uri!.replace("file://", ""));
+                //         }
+                //     },
+                // })
 
                 case "font": return self.child = Widget.FontButton({
                     show_size: false,
