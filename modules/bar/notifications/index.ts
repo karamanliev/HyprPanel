@@ -73,6 +73,11 @@ export const Notifications = () => {
             on_primary_click: (clicked: any, event: Gdk.Event) => {
                 openMenu(clicked, event, "swaync-client -t -sw", true);
             },
+            on_secondary_click: () => {
+                const scriptPath = "/home/ico/.config/hypr/scripts/show_desktop.sh";
+
+                Utils.execAsync(scriptPath)
+            },
         },
     };
 };
