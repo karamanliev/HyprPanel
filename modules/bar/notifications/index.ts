@@ -4,6 +4,7 @@ import options from "options";
 
 const { show_total } = options.bar.notifications;
 
+const isAnimationRunning = Variable(false);
 const swaync = Variable(
     { count: 0, dnd: false, visible: false, inhibited: false },
     {
@@ -76,7 +77,17 @@ export const Notifications = () => {
             on_secondary_click: () => {
                 const scriptPath = "/home/ico/.config/hypr/scripts/show_desktop.sh";
 
-                Utils.execAsync(scriptPath)
+                if (isAnimationRunning.getValue() === true) {
+                    return;
+                }
+
+                isAnimationRunning.setValue(true);
+
+                Utils.execAsync(scriptPath).then(() => {
+                    setTimeout(() => {
+                        isAnimationRunning.setValue(false);
+                    }, 500);
+                });
             },
         },
     };
